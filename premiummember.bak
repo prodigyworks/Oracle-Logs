@@ -1,0 +1,58 @@
+<?php
+	include("system-header.php"); 
+	require_once("paypalsetup.php");
+	
+	global $paypal_subscription_year;
+	global $paypal_subscription_quarter ;
+	global $paypal_subscription_month ;
+	global $subscription_details_year ;
+	global $subscription_details_quarter ;
+	global $subscription_details_month;
+	
+	$data = $_SESSION['SITE_CONFIG'];
+?>
+<h2>Upgrade to Premium Services for UNLIMITED access.</h2>
+
+<table cellspacing=0 cellpadding=10 id="premiumupgrade" class="grid2">
+	<thead>
+		<tr>
+			<td><img src="images/subscriptions.png" /></td>
+			<td align=right>USD</td>
+			<td>&nbsp;</td>
+		</tr>
+	</thead>
+	<tr>
+		<td>Annual Membership - Annually.<br><span>You will be billed today and your subscription will be available immediately.</span></td>
+		<td align=right><?php echo number_format($data->annualpremiumcost, 2); ?></td>
+		
+		<td>
+		<?php
+			$_SESSION['SUBSCRIPTION_GATEWAY'] = $paypal_subscription_year;
+			$paypal_subscription_year->print_buy_button();
+		?>
+		</td>
+	</tr>
+	<tr>
+		<td>Annual Membership - Quarterly.<br><span>You will be billed today and your subscription will be renewed quarterly.</span></td>
+		<td align=right><?php echo number_format($data->quarterlypremiumcost, 2); ?></td>
+		<td>
+		<?php
+			$_SESSION['SUBSCRIPTION_GATEWAY'] = $paypal_subscription_quarter;
+			$paypal_subscription_quarter->print_buy_button();
+		?>
+		</td>
+	</tr>
+	<tr>
+		<td>Annual Membership - Monthly.<br><span>You will be billed today and your subscription will be renewed monthly.</span></td>
+		<td align=right><?php echo number_format($data->monthlypremiumcost, 2); ?></td>
+		<td>
+		<?php
+			$_SESSION['SUBSCRIPTION_GATEWAY'] = $paypal_subscription_month;
+			$paypal_subscription_month->print_buy_button();
+		?>
+		</td>
+	</tr>
+</table>
+<?php
+	include("system-footer.php"); 
+?>

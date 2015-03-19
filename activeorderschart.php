@@ -1,0 +1,187 @@
+<?php
+	include("system-header.php"); 
+	
+	date_default_timezone_set('Europe/London'); 
+?>
+	<table class='active' width='100%' style='padding-right:30px' cellspacing=0 cellpadding=0>
+		<thead style='color:blue'>
+			<tr >
+				<td class='baseline'>Job / Quote</td>
+				<td class='baseline'>Customer</td>
+				<td class='box_rotate boxtick'>Definition</td>
+				<td class='box_rotate boxtick'>Verified</td>
+				<td class='box_rotate boxtick'>Scheduled</td>
+				<td class='box_rotate boxtick'>CE Approved</td>
+				<td class='box_rotate boxtick'>Completed</td>
+				<td class='box_rotate boxtick'>QA</td>
+			</tr>
+		</thead>
+	</table>
+	<div style="overflow-y: scroll; with:100%; height:400px">
+		<table class='list2' width='100%' cellspacing=0 cellpadding=0>
+			<?php
+				$first = true;
+				$qry = "SELECT A.*, DATE_FORMAT(A.createddate, '%Y-%m-%d %H:%i') AS createddate, " .
+						"B.login, C.name AS sitename, A.customer as clientname, A.approvalid, " .
+						"A.createdby, scheduledby, approvedby, completedby, qaby, archivedby, " .
+						"DATE_FORMAT(A.approveddate, '%Y-%m-%d %H:%i') AS approveddate, " .
+						"DATE_FORMAT(A.scheduleddate, '%Y-%m-%d %H:%i') AS scheduleddate, " .
+						"DATE_FORMAT(A.completeddate, '%Y-%m-%d %H:%i') AS completeddate, " .
+						"DATE_FORMAT(A.ceapproveddate, '%Y-%m-%d %H:%i') AS ceapproveddate, " .
+						"DATE_FORMAT(A.archiveddate, '%Y-%m-%d %H:%i') AS archiveddate, " .
+						"DATE_FORMAT(A.approvalrequesteddate, '%Y-%m-%d %H:%i') AS approvalrequesteddate, " .
+						"DATE_FORMAT(A.qadate, '%Y-%m-%d %H:%i') AS qadate," .
+						"D.prefix AS jobprefix, D.id AS jobid " .
+						"FROM jomon_quoteheader A " .
+						"LEFT OUTER JOIN jomon_jobheader D " .
+						"ON D.quoteid = A.id " .
+						"INNER JOIN jomon_members B " .
+						"ON B.member_id = A.createdby " .
+						"INNER JOIN jomon_sites C " .
+						"ON C.id = A.siteid " .
+						"WHERE A.status NOT IN ( 'V', 'X', 'P') " .
+						"ORDER BY A.id";
+				
+				$result = mysql_query($qry);
+				if (! $result) die("Error: " . mysql_error());
+				
+				//Check whether the query was successful or not
+				if ($result) {
+					while (($member = mysql_fetch_assoc($result))) {
+						$imagename = "tick.png";
+						
+						if (($member['status'] == "N" || $member['status'] == "R") && $member['approvalid'] == null) {
+							continue;
+						}
+						
+						if ($first) {
+							$first = false;
+							echo "<tr class='dummyrow'><td colspan=9>&nbsp;</td></tr>\n";
+							echo "<tr class='firstrow'>\n";
+							
+						} else {
+							echo "<tr>\n";
+						}
+						if (($member['status'] == "N" || $member['status'] == "R")) {
+							echo "<td align=left ><a href='viewquote.php?id=" . $member['id'] . "'>" . $member['prefix'] . sprintf("%04d", $member['id']) . "</a></td>\n";
+							
+						} else {
+							echo "<td align=left ><a href='viewquote.php?id=" . $member['id'] . "'>" . $member['jobprefix'] . sprintf("%04d", $member['id']) . "</a></td>\n";
+						}
+						
+						if ($member['approvalid'] == null) {
+							$imagename = "tick.png";
+							
+						} else {
+							$requestdate = $member['approvalrequesteddate'];
+							
+							if ($requestdate == null) {
+								$requestdate = $member['createddate'];
+							}
+							
+			   				$imagename = getTickImage($member['approvedby'], $member['approveddate'], $requestdate, 1, 2);
+						}
+						
+						echo "<td align=left >" . $member['clientname'] . "</td>\n";
+						
+						echo "<td align=center title='Raised by " . GetUserName($member['createdby']) . " on " . $member['createddate'] . "' class='boxtick'><img src='images/$imagename' /></td>\n";
+						
+						if ($member['status'] == 'A' ||
+						    $member['status'] == 'S' ||
+						    $member['status'] == 'I' ||
+						    $member['status'] == 'C' ||
+						    $member['status'] == 'Q' ||
+						    $member['status'] == 'V') {
+						    	
+						    $imagename = getTickImage($member['scheduledby'], $member['scheduleddate'], $member['approveddate'], 1, 2);
+	
+							echo "<td title='Verified by " . GetUserName($member['approvedby']) . " on " . $member['approveddate'] . "'  align=center  class='boxtick'><img src='images/$imagename' /></td>\n";
+							
+					    } else {
+							echo "<td align=center  class='boxtick'>&nbsp;</td>\n";
+					    }
+						
+						if ($member['status'] == 'S' ||
+						    $member['status'] == 'I' ||
+						    $member['status'] == 'C' ||
+						    $member['status'] == 'Q' ||
+						    $member['status'] == 'V') {
+						    	
+						    $imagename = getTickImage($member['ceapprovedby'], $member['ceapproveddate'], $member['scheduleddate'], 1, 2);
+	
+							echo "<td align=center title='Scheduled by " . GetUserName($member['scheduledby']) . " on " . $member['scheduleddate'] . "'  class='boxtick'><img src='images/$imagename' /></td>\n";
+							
+					    } else {
+							echo "<td align=center  class='boxtick'>&nbsp;</td>\n";
+					    }
+						
+						if ($member['status'] == 'I' ||
+						    $member['status'] == 'C' ||
+						    $member['status'] == 'Q' ||
+						    $member['status'] == 'V') {
+						    	
+						    $imagename = getTickImage($member['completedby'], $member['completeddate'], $member['ceapproveddate'], 8, 10);
+	
+							echo "<td align=center   title='CE Approved by " . GetUserName($member['ceapprovedby']) . " on " . $member['ceapproveddate'] . "'  class='boxtick'><img src='images/$imagename' /></td>\n";
+							
+					    } else {
+							echo "<td align=center  class='boxtick'>&nbsp;</td>\n";
+					    }
+						
+						if ($member['status'] == 'C' ||
+						    $member['status'] == 'Q' ||
+						    $member['status'] == 'V') {
+						    	
+						    $imagename = getTickImage($member['qaby'], $member['qadate'], $member['completeddate'], 2, 3);
+	
+							echo "<td align=center title='Completed by " . GetUserName($member['completedby']) . " on " . $member['completeddate'] . "'   class='boxtick'><img src='images/$imagename' /></td>\n";
+							
+					    } else {
+							echo "<td align=center  class='boxtick'>&nbsp;</td>\n";
+					    }
+						
+						if ($member['status'] == 'Q' ||
+						    $member['status'] == 'V') {
+	
+							echo "<td align=center title='Quality Assured by " . GetUserName($member['qaby']) . " on " . $member['qadate'] . "'   class='boxtick lastcolumn'><img src='images/$imagename' /></td>\n";
+							
+					    } else {
+							echo "<td align=center  class='boxtick lastcolumn'>&nbsp;</td>\n";
+					    }
+						
+						echo "</tr>\n";
+					}
+				}
+			?>
+		</table>
+	</div>
+</form>
+<?php
+
+
+	function getTickImage($checksum, $date1, $date2, $amberrule, $redrule) {
+		$compareDate = null;
+
+		$compareDate = new DateTime();
+		
+	    if ($checksum != null && $checksum != "") {
+	    	$compareDate = new DateTime($date1);
+	    }
+
+    	$resultDate = date_diff($compareDate, new DateTime($date2));
+    	
+    	if ($resultDate->format("%d") >= ($redrule)) {
+			$imagename = "redtick.png";
+			
+    	} else if ($resultDate->format("%d") >= ($amberrule )) {
+			$imagename = "ambertick.png";
+			
+		} else {
+			$imagename = "tick.png";
+		}
+		
+		return $imagename;
+	}
+
+	include("system-footer.php"); 
+?>

@@ -1,0 +1,152 @@
+DONE - Login
+DONE - Show login on header
+DONE - Log out
+DONE - Multiple file attachment
+DONE - Mega drop down.
+DONE - Ajax communication for chat
+DONE - Response to expert request
+DONE - Write article
+DONE - Rename Ask question to write article
+DONE - Update the Requests Waiting via ajax on timeout.
+DONE - Add time latest command for timeout.
+DONE - Update the Experts online via ajax on timeout.
+DONE - Increase text box sizes in profile.php
+DONE - register new recruiter
+DONE - register new user
+DONE - register consultant
+DONE - Embed images within tiny_mce and upload and refer using script.
+DONE - Move experts on line to top.
+DONE - Add chat to expert button next to above message.
+DONE - reduce the size of the header banner.
+DONE - Move banner ad underneath header banner.
+DONE - show experts on line
+DONE - show article
+DONE - Show attached documents for article
+DONE - Remove original image plugin for tiny_mce
+DONE - Create logo for Oracle logs.
+DONE - show recent articles (top 5)
+DONE - show popular articles (top 5)
+DONE - manage technology category
+DONE - manage tech version category
+DONE - show experts on line count
+DONE - Allow for session ending.
+DONE - manage operating system category
+DONE - manage op version category
+DONE - show my articles count
+DONE - Fix preview
+DONE - Ask question
+DONE - manage users
+DONE - manage roles
+DONE - Close chat (introduce status)
+DONE - Intermediate page to forward on the request expert chat to prevent refresh re-opening chat session.
+DONE - Manage categories
+DONE - CSS reduction problem when hovering over mega menu
+DONE - mega menu not wide enough
+DONE - Not showing menu when timeout occurs.
+DONE - Site config app, including cost per year for premium user, cost per year for recruiters and advertisers
+DONE - Show articles ready for publishing
+DONE - Flag article as featured
+DONE - show featured articles (top 5)
+DONE - Show "ready for publishing" via Ajax
+DONE - show icon for articles status, e.g. visible / premium 
+DONE - Show published articles when not in role, but show a small fraction of the content.
+DONE - Reduce font size for date picker / forms
+DONE - view message history by user
+DONE - Embed code with tiny_mce
+DONE - view question
+DONE - answer question
+DONE - Unpublished answers
+DONE - Publish answers
+DONE - Show answer image if answered, open questions show unanswered image
+DONE - Create php file for same parts of the chat apps.
+DONE - tidy up mega menu into categories
+DONE - manage consultants
+DONE - manage recruiters
+DONE - manage advertisers
+DONE - manage premium users
+DONE - manage registered users
+DONE - Registering users should be confirmed by ADMIN role.
+DONE - Email notification when user registration to ADMIN and USER.
+DONE - Update document set sessionid to NULL once copied over to associated document.
+DONE - My Questions
+DONE - open questions
+DONE - Add view image to article grid.
+DONE - Add view image to question grid.
+DONE - answered questions
+DONE - Email notification when request publish
+DONE - Add Jobs menu
+DONE - Add Jobs menu
+DONE - Paginate lists
+DONE - search questions - by technology / version / op system / op version
+DONE - search articles - by title keyword
+DONE - Upload ads
+DONE - manage ads
+DONE - show ads on page
+DONE - determine which advert to place on which page ? speak to Jomon
+DONE - allow advertisers to register
+DONE - allow advertisers to upload adverts
+DONE - View ads (preview mode)
+DONE - Fix expiry date on upload
+DONE - Publish ads
+DONE - Email notification when request publish ad
+DONE - home page recent questions.
+DONE - Cancellation of articles
+DONE - Cancel questions
+DONE - Cancel question answers
+DONE - Cancel ads
+DONE - restrict by role
+DONE - premium user paypal recurring payment
+DONE - Cache menu
+DONE - 3 sets of costs within site config
+DONE - Save paypal details - user , password , signature, sandbox tickbox on siteconfig
+DONE - Store lat and lng when uploading job location
+DONE - Upload job
+DONE - URL against user table when registering.
+DONE - Show member URL on job
+DONE - Upload of images doesn't seem to work for ads.
+DONE - Job detail
+DONE - view jobs
+DONE - add job
+DONE - search jobs - by location. Use google map API for location
+DONE - Cache siteconfig withing the session
+DONE - Clear siteconfig cache when saving siteconfig
+DONE - Google API key on siteconfig
+DONE - profile ID from paypal success (start_subscription) needs to be stamped on the user.
+DONE - Check profile ID status when logged on to see if status OK.
+DONE - Google map key needed for host - use siteconfig.
+DONE - Job detail pads to far right
+DONE - search jobs - by keyword, by salary, by type
+DONE - remove DTI Admin from email
+DONE - Apply for job
+DONE - User premium member user costs from site config
+DONE - Prevent clicking on job search until location auto complete is finished.
+
+Verify all forms
+Show cancelled articles
+Show cancelled ads
+Show cancelled questions
+Show cancelled question answers
+Amend article
+Amend question
+Amend answer
+Amend ad
+Amend job
+Suspend user flag
+Suspend user button on manage users.
+Email notification when published
+Email notification when cancelled
+Email notification when answered
+Email notification when expired
+Allow admin to cancel user premium contract
+Ask question when request chat.
+Prompt for login if ask question unauthenticated.
+Prompt for payment if asking question and not PREMIUM user.
+remove job
+show open questions count
+show answered questions count
+show open questions
+show answered questions
+show my articles
+Save My Workspace variables against the user table
+Forward all saves to prevent duplication
+Take into account PREMIUM role
